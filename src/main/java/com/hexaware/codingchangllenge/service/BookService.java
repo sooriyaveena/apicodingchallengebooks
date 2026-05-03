@@ -20,7 +20,7 @@ public class BookService {
     }
 
     public Book getBookByIsbn(String isbn) {
-        return br.findById(isbn).orElseThrow(() -> new RuntimeException("Book not found"));
+        return br.findById(isbn).orElseThrow(() -> throw new ResourceNotFoundException("Book not found");
     }
 
     public Book addBook(Book book) {
@@ -32,7 +32,7 @@ public class BookService {
 
   
     public Book updateBook(String isbn, Book book) {
-        Book b = br.findById(isbn).orElseThrow(() -> new RuntimeException("Book not found"));
+        Book b = br.findById(isbn).orElseThrow(() -> new ResourceNotFoundException("Book not found"));
 
         b.setTitle(book.getTitle());
         b.setAuthor(book.getAuthor());
@@ -43,7 +43,7 @@ public class BookService {
 
   
     public String deleteBook(String isbn) {
-        Book b = br.findById(isbn).orElseThrow(() -> new RuntimeException("Book not found"));
+        Book b = br.findById(isbn).orElseThrow(() -> new ResourceNotFoundException("Book not found"));
 
         br.delete(b);
         return "Deleted Book Successfully";
