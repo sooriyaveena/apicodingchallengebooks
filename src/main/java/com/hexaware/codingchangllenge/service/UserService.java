@@ -17,9 +17,9 @@ public class UserService {
 
  
     public User addUser(User user) {
-    User existing = ur.findByEmail(user.getEmail());
-    if (existing != null) {
-        throw new RuntimeException("Email already exists");
+    User u = ur.findByEmail(user.getEmail());
+    if (u != null) {
+        throw new BadRequestException("Email already exists");
     }
     user.setRole(User.UserRole.USER);
 
@@ -29,17 +29,17 @@ public class UserService {
     public User login(String email, String password) {
         User user = ur.findByEmail(email);
         if (user == null) {
-            throw new RuntimeException("User not found");
+            throw new ResourseNotFoundException("User not found");
         }
         if (!user.getPassword().equals(password)) {
-            throw new RuntimeException("Wrong Password");
+            throw new UnauthorizedException("Wrong Password");
         }
 
         return user;
     }
 
     public User getUserById(int id) {
-        return ur.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        return ur.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
     public User updateUser(int id, User user) {
