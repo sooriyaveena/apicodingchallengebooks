@@ -25,7 +25,7 @@ public class BookService {
 
     public Book addBook(Book book) {
         if (br.existsById(book.getIsbn())) {
-            throw new RuntimeException("Book already exists");
+            throw new BadRequestException("Book already exists");
         }
         return br.save(book);
     }
